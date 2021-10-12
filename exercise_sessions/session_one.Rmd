@@ -5,6 +5,13 @@ date: "10/12/2021"
 output: pdf_document
 ---
 
+```{r}
+wd <- getwd()
+data_dir <- paste(wd, "/data/", sep="")
+out_dir <- paste(wd, "/out/", sep="")
+```
+
+
 ## Chapter 1 
 
 ### 1.1: Common exercise
@@ -109,4 +116,111 @@ tips_subset <- tips[1:20, c("tip", "sex", "day")]
 tips_subset
 ```
 
+
+## Chapter 3
+### 3.2: Importing an *Excel* file using R function
+```{r}
+library(readxl)
+```
+```{r}
+titanic_file <- paste(data_dir, "titanic.xlsx", sep="")
+
+titanic_df <- read_excel(titanic_file)
+titanic_df
+```
+
+### 3.3: Export a data frame to at *xlsx* file
+```{r}
+library(openxlsx)
+
+write.xlsx(airquality, file=paste(out_dir, "airquality.xlsx", sep=""))
+```
+
+### 3.4: Importing a /txt/ file using the read.table() function
+```{r}
+chol <- read.table(file=paste0(data_dir, "chol_R.txt"), header=TRUE)
+chol
+```
+
+### 3.5: Export a data frame to a *.txt* file
+```{r}
+write.table(
+  chol, 
+  file=paste0(out_dir, "chol_export.txt"), 
+  quote=FALSE,
+  sep=" ",
+  row.names=FALSE,
+  col.names = TRUE)
+```
+
+
+\newpage
+
+## Chapter 4: Functions
+
+1. Write a function which gives the most elementary statistics for a sample x: min, median, max, mean, sd and length. Apply your function on a vector x with values from 25 to 80.
+
+```{r}
+elem_stat <- function(array){
+  array_min <- min(array)
+  array_max <- max(array)
+  array_median <- median(array)
+  array_mean <- mean(array)
+  array_sd <- sd(array)
+  array_length <- length(array)
+  stats <- c(array_min, array_max, array_median, array_mean, array_sd, array_length)
+  
+  return(stats)
+}
+
+test_array <- 25:80
+elem_stat(test_array)
+```
+
+2. Write a function fun1 which produces the text ‘Non-negative number’ if you apply fun1 to a positive number and ‘negative number’ if you apply fun1 to a negative number. You can make use of the ifelse function in R. Apply this function to the values 9 and -13.
+```{r}
+fun1 <- function(n){
+  if(n>=0){
+    print("Non-negative number")
+  } else{
+    print("Negative number")
+  }
+}
+
+x <- 9; fun1(x)
+x <- -13; fun1(x)
+```
+
+3. Write a function to solve an equation of second degree (ax2 + bx + c = 0).
+```{r}
+determinant <- function(a, b, c){
+  return(b^2 - (4*a*c))
+}
+
+solve_second_deg <- function(a, b, c){
+  d <- determinant(a, b, c)
+  if(d>0){
+    x1 <- (-b + sqrt(d)) / (2 * a)
+    x2 <- (-b - sqrt(d)) / (2 * a)
+    return(c(x1, x2))
+  } else if(d==0){
+    return((-b + sqrt(d)) / (2 * a))
+  } else{
+    print("determinant < 0")
+  }
+}
+
+fun_second_fun <- function(x, a, b, c){
+  y <- a*x^2 + b*x + c
+  return(y)
+}
+
+my_second_fun <- function(x){
+  return(fun_second_fun(x, -8, 6, 4))
+}
+
+print(solve_second_deg(-8, 6, 4))
+plot(my_second_fun(seq(from=-2, to=2, by=0.01)), type="l")
+
+```
 

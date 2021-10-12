@@ -1,0 +1,112 @@
+---
+title: "Session one"
+author: "Mees van der Ent"
+date: "10/12/2021"
+output: pdf_document
+---
+
+## Chapter 1 
+
+### 1.1: Common exercise
+Create two arrays x and y and plot as coordinates in scatterplot.
+```{r}
+x <- c(2, 4, 7, 10)
+y <- c(1, 10, 11, 18)
+
+x
+y
+
+plot(x, y)
+```
+
+\newpage
+## Chapter 2
+
+### 2.1: Vectors
+a. Create the object test1 with numbers 1.5, 0.7, 45.6.
+b. Create a vector y1 with the numbers from 1 to 10.
+c. Create a logical vector y2 from y1. An element of y2 should be TRUE if the corresponding element of
+y1 is larger than 5.
+d. How many elements from y1 has a value larger than 5?
+```{r}
+
+test1 <- c(1.5, 0.7, 45.6)
+y1 <- 1:10
+
+y2 <- y1>5
+sum(y2)
+```
+
+### 2.2: creating sequences
+
+a. Create a vector x with elements (1, 2, 3, . . . , 100)  
+```{r}
+x <- 1:100
+x
+```
+
+b. Create a vector y with elements (0, 5, 10, 15, . . . , 500)
+```{r}
+y <- seq(from=0, to=500, by=5)
+y
+```
+
+c. Create a vector z1 with elements (1, 1, 1, 2, 2, 2, . . . , 50, 50, 50)
+```{r}
+z1 <- rep(1:50, rep(3, 50))
+z1
+```
+
+d. Create a vector z2 with elements (1, 2, 2, 3, 3, 3, . . . , 10)
+```{r}
+z2 <- rep(1:10, 1:10)
+z2
+```
+
+e. Create a vector z3 with elements (1, 2, 2, 3, 4, 4, 5, 6, 6, . . . , 50, 50)
+```{r}
+z3 <- rep(1:50, rep(1:2, 25))
+z3
+```
+
+### 2.3: Matrix creation
+a. Create a vector with 100 random normal numbers and use that to generate a 10 by 10 matrix. Call this matrix mat1.
+Hint: to generate a random normal vector, use the function rnorm().
+```{r}
+rand_dist <- rnorm(100)
+mat1 <- matrix(rand_dist, nrow=10, ncol=10)
+mat1
+```
+
+b. Add an extra row to mat1 with the numbers 1 to 10 which will be the new first row. Also add the row with numbers 10 to 1 which will be the last row.
+```{r}
+mat2 <- rbind(1:10, mat1, 10:1)
+mat2
+```
+
+c. Add an extra column to the matrix obtained in step b with the number 1 to 12 (as first column).
+```{r}
+mat3 <- cbind(1:12, mat2)
+mat3
+```
+
+### 2.4: Working with data frames
+a. Install and load the package *reshape*.
+```{r}
+library(reshape)
+```
+b. Check the data description of this data frame.
+```{r}
+?tips
+```
+c. Ask for the names of the variables in this data frame.
+```{r}
+names(tips)
+```
+d. Take a subset of data tips which contains the observations from 1 until 20 and only the variables *tip*, *sex* and *day*.
+```{r}
+tips_subset <- tips[1:20, c("tip", "sex", "day")]
+tips_subset
+```
+
+
